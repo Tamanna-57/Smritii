@@ -232,12 +232,12 @@ Smritii/
 
 | Name | Enrollment no. | Role |
 |---|---|---|
-| Tamanna Arora | `<ENROLLMENT_NO>` | `<ROLE>` |
-| Aman Swamy | `<ENROLLMENT_NO>` | `<ROLE>` |
-| Nishtha Jain | `<ENROLLMENT_NO>` | `<ROLE>` |
-| Shourya Grover | `<ENROLLMENT_NO>` | `<ROLE>` |
+| Tamanna Arora | S24CSEU0588 | Team lead; backend API, database and deployment |
+| Aman Swamy | S24CSEU2269 | Frontend (patient and caregiver portals), offline PWA, UI testing |
+| Nishtha Jain | S24CSEU2245 | Prompt engineering and Gemini integration (P1–P3), prompt experiments |
+| Shourya Grover | S24CSEU2080 | Testing (API and WhatsApp), documentation, architecture diagrams |
 
-Team ID: `<TEAM_ID>` · Team name: `<TEAM_NAME>` · Batch: `<BATCH>` · Faculty: `<FACULTY_NAME>`
+Team ID: PE-B81-27 · Team name: Powerpuff Boys · Batch: 85 · Faculty: Indrajeet Gupta
 
 ## 12. Acknowledgement and licence
 
