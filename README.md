@@ -11,6 +11,12 @@
 
 ---
 
+## Contents
+
+1. [Problem statement](#1-problem-statement) · 2. [Project overview](#2-project-overview) · 3. [Screenshots](#3-screenshots) · 4. [Objectives](#4-objectives) · 5. [Features, technology and AI](#5-features-technology-and-ai) · 6. [Module status](#6-module-status) · 7. [Run locally](#7-run-locally) · 8. [Deployment](#8-deployment) · 9. [Architecture](#9-architecture) · 10. [Repository structure](#10-repository-structure) · 11. [Team](#11-team) · 12. [Acknowledgement and licence](#12-acknowledgement-and-licence)
+
+---
+
 ## 1. Problem statement
 
 People with early dementia forget medicines, meals and the faces of family. In India's North-Eastern Region the problem is sharper: few neurologists outside Guwahati, patchy 2G/3G internet, and elderly patients who speak Assamese, Hindi or a local language rather than English. Family caregivers have no simple way to see whether the day's routine is being followed.
@@ -22,9 +28,53 @@ Smriti is a mobile-first web app (installable PWA) with two portals:
 - **Patient portal**: large-button PIN login, today's schedule read aloud, five culturally familiar memory games, a family photo "Memory Bank", and an **AI companion chat** that answers questions such as *"Who is my doctor?"* or *"Which medicine now?"* from the patient's own records, in the patient's language.
 - **Caregiver portal**: patient roster with adherence %, per-patient record with a cognitive health score and game telemetry, overdue-reminder alerts, and forms to add patients, reminders and photos.
 
-A WhatsApp webhook lets patients reply "Done" to a reminder, and a daily 09:00 job sends reminder messages (needs a Meta WhatsApp token, see [Status](#5-module-status)).
+A WhatsApp webhook lets patients reply "Done" to a reminder, and a daily 09:00 job sends reminder messages (needs a Meta WhatsApp token, see [Status](#6-module-status)).
 
-## 3. Objectives
+## 3. Screenshots
+
+All screens below are from the running app with the seeded demo data. The full set of 18 screens is in [`docs/screenshots/`](docs/screenshots).
+
+### Patient portal
+
+<table>
+  <tr>
+    <td align="center" width="50%"><img src="docs/screenshots/01_patient_login.png" alt="Patient PIN login" /><br /><sub><b>PIN login</b>: large buttons, no typing of passwords</sub></td>
+    <td align="center" width="50%"><img src="docs/screenshots/02_patient_dashboard.png" alt="Patient home dashboard" /><br /><sub><b>Home</b>: greeting, today's challenge and routine status</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/03_patient_reminders.png" alt="Daily reminders" /><br /><sub><b>Reminders</b>: timed daily schedule, tap to complete</sub></td>
+    <td align="center"><img src="docs/screenshots/04_patient_games_suite.png" alt="Cognitive games suite" /><br /><sub><b>Games</b>: five culturally familiar memory games</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/07_game_faces_family_recall.png" alt="Faces and Family Recall game" /><br /><sub><b>Faces &amp; Family Recall</b>: recognise family members</sub></td>
+    <td align="center"><img src="docs/screenshots/10_patient_family_vault.png" alt="Family Memory Bank" /><br /><sub><b>Memory Bank</b>: family photos with their stories</sub></td>
+  </tr>
+</table>
+
+### Caregiver portal
+
+<table>
+  <tr>
+    <td align="center" width="50%"><img src="docs/screenshots/13_caregiver_dashboard.png" alt="Caregiver patient roster" /><br /><sub><b>Patient roster</b>: adherence, alerts and streaks at a glance</sub></td>
+    <td align="center" width="50%"><img src="docs/screenshots/14_caregiver_patient_detail.png" alt="Caregiver patient detail" /><br /><sub><b>Patient record</b>: cognitive health score and game telemetry</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/15_caregiver_cognitive_games.png" alt="Caregiver cognitive games view" /><br /><sub><b>Cognitive games</b>: per-game performance</sub></td>
+    <td align="center"><img src="docs/screenshots/16_caregiver_notifications.png" alt="Caregiver notifications" /><br /><sub><b>Alerts</b>: overdue reminders that need attention</sub></td>
+  </tr>
+</table>
+
+### On a phone
+
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="docs/screenshots/milestone2/m2_patient_dashboard.png" alt="Mobile home" /><br /><sub><b>Home</b></sub></td>
+    <td align="center" width="33%"><img src="docs/screenshots/milestone2/m2_patient_reminders.png" alt="Mobile reminders" /><br /><sub><b>Reminders</b></sub></td>
+    <td align="center" width="33%"><img src="docs/screenshots/milestone2/UI5_chat_who_is_my_doctor.png" alt="AI companion chat answering in Assamese" /><br /><sub><b>AI companion</b>: answers in Assamese</sub></td>
+  </tr>
+</table>
+
+## 4. Objectives
 
 1. Give the patient one simple place for today's routine, read aloud in their language.
 2. Answer the patient's everyday questions with an LLM that is grounded in their real records, not invented facts.
@@ -34,7 +84,7 @@ A WhatsApp webhook lets patients reply "Done" to a reminder, and a daily 09:00 j
 
 **Target users:** elderly people with early to moderate memory loss (primary), family caregivers and clinicians (secondary).
 
-## 4. Features, technology and AI
+## 5. Features, technology and AI
 
 | Area | What is used |
 |---|---|
@@ -58,7 +108,7 @@ A WhatsApp webhook lets patients reply "Done" to a reminder, and a daily 09:00 j
 
 Full prompt sheets: [`prompts/final/`](prompts/final). Earlier versions: [`prompts/v1`](prompts/v1), [`v2`](prompts/v2), [`v3`](prompts/v3), taken from the git history of the original project (github.com/gopalrajlohiya11-ui/Smriti).
 
-## 5. Module status
+## 6. Module status
 
 Checked by running the app locally (MongoDB 7, seeded demo data) on 22 Nov 2026; details in [`test-data/`](test-data).
 
@@ -78,7 +128,7 @@ Checked by running the app locally (MongoDB 7, seeded demo data) on 22 Nov 2026;
 | Languages | English / Hindi / Assamese UI | Working | Hindi reminder-title bug fixed in Milestone 2. |
 | Translation & TTS service | Assamese text via ML engine | Fallback only | Returns the original text when the engine is unreachable. |
 
-## 6. Run locally
+## 7. Run locally
 
 Requirements: Node.js 18+ (tested on 22), MongoDB (local or Atlas).
 
@@ -134,7 +184,7 @@ node code/run_ui_tests.js           # 5 browser tests (needs Playwright + vite p
 node code/prompt_experiments.js     # P1 v1/v2/v3 comparison (needs a Gemini key)
 ```
 
-## 7. Deployment
+## 8. Deployment
 
 - **Backend → Render** (`render.yaml`): service `smriti-api`, build `cd backend && npm ci`, start `cd backend && npm start`, env `MONGO_URI`, `JWT_SECRET`, `GEMINI_API_KEY`, `TZ=Asia/Kolkata`, `DEMO_SEED=daily`.
 - **Database → MongoDB Atlas** free M0 cluster; Network Access `0.0.0.0/0` (Render has no fixed IP).
@@ -142,13 +192,13 @@ node code/prompt_experiments.js     # P1 v1/v2/v3 comparison (needs a Gemini key
 
 Step-by-step: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
-## 8. Architecture
+## 9. Architecture
 
 ![System architecture](docs/diagrams/01_system_architecture.png)
 
 More diagrams: [prompt workflow](docs/diagrams/02_prompt_workflow.png), [task decomposition](docs/diagrams/03_task_decomposition.png), [input-output flow](docs/diagrams/04_input_output_flow.png). Written description: [`docs/architecture/`](docs/architecture).
 
-## 9. Repository structure
+## 10. Repository structure
 
 ```text
 Smritii/
@@ -167,7 +217,7 @@ Smritii/
 ├── docs/
 │   ├── architecture/            architecture notes
 │   ├── diagrams/                Mermaid sources + PNG/SVG
-│   ├── screenshots/             original 18 screens + milestone2/ test screenshots
+│   ├── screenshots/             18 app screens (shown above) + milestone2/ test screenshots
 │   ├── original_project/        SIH 2026 documents and the original README
 │   ├── DEPLOYMENT.md
 │   ├── Reel_Script.md
@@ -178,16 +228,18 @@ Smritii/
 └── .gitignore
 ```
 
-## 10. Team
+## 11. Team
 
 | Name | Enrollment no. | Role |
 |---|---|---|
 | Tamanna Arora | `<ENROLLMENT_NO>` | `<ROLE>` |
-| `<MEMBER_NAME>` | `<ENROLLMENT_NO>` | `<ROLE>` |
+| Aman Swamy | `<ENROLLMENT_NO>` | `<ROLE>` |
+| Nishtha Jain | `<ENROLLMENT_NO>` | `<ROLE>` |
+| Shourya Grover | `<ENROLLMENT_NO>` | `<ROLE>` |
 
 Team ID: `<TEAM_ID>` · Team name: `<TEAM_NAME>` · Batch: `<BATCH>` · Faculty: `<FACULTY_NAME>`
 
-## 11. Acknowledgement and licence
+## 12. Acknowledgement and licence
 
 Smriti was designed and built by **Team Design Divas** (Gopal Raj Lohiya, Aditya Rai Chauhan, Mahir Kumar, Hitarth Garg, Mehak, Diya Gautam) for Smart India Hackathon 2026, problem statement SIH26003, at https://github.com/gopalrajlohiya11-ui/Smriti. Its full commit history and authorship remain in that original repository. The work added for Milestone 2 (bug fixes, tests, prompt documentation, deployment changes, documents) is listed in [`CHANGELOG.md`](CHANGELOG.md). The ML engine is a separate project: https://github.com/adityaraichauhan/Dementia-AI-engine.
 
