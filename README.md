@@ -7,7 +7,6 @@
 | Prototype (web app) | **https://smriti-mini-project.vercel.app** (Vercel) |
 | Backend API | https://smriti-api-9lj6.onrender.com (Render, free plan; first request after idle takes ~50 s) |
 | Repository | https://github.com/Tamanna-57/Smritii |
-| Original project | https://github.com/gopalrajlohiya11-ui/Smriti (Team Design Divas, Smart India Hackathon 2026, PS SIH26003) |
 | Demo logins | Patient: name `Ramesh Sharma`, PIN `1234` · Caregiver: `dr.ananya@smriti.in` / `caregiver123` |
 
 ---
