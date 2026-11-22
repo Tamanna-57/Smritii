@@ -299,7 +299,7 @@ ${testTable}
 
 <h2 class="break">5. Repository</h2>
 ${exists('docs/screenshots/milestone2/repository.png') ? `<figure><img src="${img('docs/screenshots/milestone2/repository.png')}" style="max-height:470px"><figcaption>${esc(team.repoUrl)}</figcaption></figure>` : '<p class="ph">Repository screenshot pending.</p>'}
-<p>Repository: ${esc(team.repoUrl)} (public). It contains the full Smriti code (frontend/, backend/) with the original team's 158 commits kept, plus the Milestone 2 commits by Tamanna Arora on 22 Nov 2026: six bug fixes, deployment changes, test runners (code/), saved test inputs and outputs (test-data/), prompt versions v1–v3 and final sheets P1–P3 (prompts/), diagrams, screenshots and these PDFs (docs/). CHANGELOG.md lists every change with its commit.</p>
+<p>Repository: ${esc(team.repoUrl)} (public). It contains the full Smriti code (frontend/, backend/) with the Milestone 2 work by Tamanna Arora: six bug fixes, deployment changes, test runners (code/), saved test inputs and outputs (test-data/), prompt versions v1–v3 and final sheets P1–P3 (prompts/), diagrams, screenshots and these PDFs (docs/). CHANGELOG.md lists every dated change; the original team's history is at github.com/gopalrajlohiya11-ui/Smriti.</p>
 
 <h2 class="break">6. Supporting document</h2>
 <p class="small">Document type: ${supportingIsSynopsis ? 'Synopsis' : 'Technical report'} (the same PDF is uploaded separately).</p>

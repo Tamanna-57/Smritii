@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Version | v3 (this is also the final version, see `prompts/final/P1_patient_companion_chat.md`) |
-| Source | `backend/services/patientChatService.js`, commit `d44bf41` (4 Sep 2026, Gopal Raj Lohiya). Unchanged since; commit `2b35cbd` (7 Sep) only added database time-outs and the offline fallback around it. |
+| Source | `backend/services/patientChatService.js`, commit `d44bf41` of github.com/gopalrajlohiya11-ui/Smriti (4 Sep 2026, Gopal Raj Lohiya). Unchanged since; commit `2b35cbd` (7 Sep) only added database time-outs and the offline fallback around it. |
 | What changed from v2 | (1) Added a strict **language rule**: always reply in the patient's preferred language. (2) Added the last 5 **game sessions** as context. (3) Rule 1 now gives a direct answer pattern per question type (doctor, medicines, games, family). (4) The distress rule is scoped narrowly so factual questions do not get "you are safe at home" replies. (5) Told the model not to print rubric labels. (6) Model cascade changed to faster models. |
 | What was removed | v2 rules 3 and 4: "Never make up new medications, dosages, or fictional relatives" and "If they ask about changing doses … ask them to confirm with the doctor". The Milestone 2 tests check what this removal does (test T11). |
 | Why | Replies came back in English for Assamese and Hindi patients; distress reassurance fired on plain questions; the model printed labels. (Reasons from the commit and code comments; no test log from September exists in the repository.) |

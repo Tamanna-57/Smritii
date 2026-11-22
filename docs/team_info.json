@@ -6,7 +6,7 @@
   "batch": "<BATCH>",
   "faculty": "<FACULTY_NAME>",
   "prototypeUrl": "https://smriti-mini-project.vercel.app",
-  "repoUrl": "https://github.com/Tamanna-57/smriti",
+  "repoUrl": "https://github.com/Tamanna-57/Smritii",
   "reelUrl": "<REEL_URL>",
   "reelSeconds": "<REEL_SECONDS>",
   "supportingDocument": "synopsis",
@@ -17,7 +17,7 @@
       "enrollment": "<ENROLLMENT_NO>",
       "role": "<ROLE>",
       "tasks": "Ran and audited the prototype; found and fixed 6 bugs (seed crash, wrong-PIN login, Routine Sequencer, WhatsApp phone match, Hindi titles, rate limit); wrote API/UI/WhatsApp tests and the prompt experiment; documented prompts v1–v3 and P1–P3; set up repository and Render deployment",
-      "evidence": "Commits by Tamanna Arora on 22 Nov 2026 (see CHANGELOG.md); code/run_api_tests.js; prompts/final/",
+      "evidence": "Repository github.com/Tamanna-57/Smritii; CHANGELOG.md; code/run_api_tests.js; prompts/final/",
       "percent": "<%>"
     },
     {

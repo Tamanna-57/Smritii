@@ -6,7 +6,7 @@
 |---|---|
 | Prototype (web app) | **https://smriti-mini-project.vercel.app** (Vercel) |
 | Backend API | https://smriti-api-9lj6.onrender.com (Render, free plan; first request after idle takes ~50 s) |
-| Repository | https://github.com/Tamanna-57/smriti |
+| Repository | https://github.com/Tamanna-57/Smritii |
 | Original project | https://github.com/gopalrajlohiya11-ui/Smriti (Team Design Divas, Smart India Hackathon 2026, PS SIH26003) |
 | Demo logins | Patient: name `Ramesh Sharma`, PIN `1234` · Caregiver: `dr.ananya@smriti.in` / `caregiver123` |
 
@@ -57,7 +57,7 @@ A WhatsApp webhook lets patients reply "Done" to a reminder, and a daily 09:00 j
 | P2 | Voice Question (transcribe + reply) | same file, audio branch | same as P1 |
 | P3 | WhatsApp Companion Reply | `backend/services/aiService.js` | `gemini-3.6-flash`, default settings |
 
-Full prompt sheets: [`prompts/final/`](prompts/final). Earlier versions: [`prompts/v1`](prompts/v1), [`v2`](prompts/v2), [`v3`](prompts/v3), taken from the git history of the original project.
+Full prompt sheets: [`prompts/final/`](prompts/final). Earlier versions: [`prompts/v1`](prompts/v1), [`v2`](prompts/v2), [`v3`](prompts/v3), taken from the git history of the original project (github.com/gopalrajlohiya11-ui/Smriti).
 
 ## 5. Module status
 
@@ -84,8 +84,8 @@ Checked by running the app locally (MongoDB 7, seeded demo data) on 22 Nov 2026;
 Requirements: Node.js 18+ (tested on 22), MongoDB (local or Atlas).
 
 ```bash
-git clone https://github.com/Tamanna-57/smriti.git
-cd smriti
+git clone https://github.com/Tamanna-57/Smritii.git
+cd Smritii
 ```
 
 **Backend**
@@ -152,14 +152,14 @@ More diagrams: [prompt workflow](docs/diagrams/02_prompt_workflow.png), [task de
 ## 9. Repository structure
 
 ```text
-smriti/
+Smritii/
 ├── README.md
 ├── CHANGELOG.md                 dated changes made for Milestone 2
 ├── LICENSE                      MIT, original authors
 ├── frontend/                    React PWA (unchanged layout)
 ├── backend/                     Express API, models, routes, services, seed.js
 ├── prompts/
-│   ├── v1/ v2/ v3/              P1 versions from the project's git history
+│   ├── v1/ v2/ v3/              P1 versions from the original project's git history
 │   └── final/                   P1, P2, P3 prompt sheets
 ├── code/                        test runners, prompt experiment, ML-engine utility
 ├── test-data/
@@ -190,6 +190,6 @@ Team ID: `<TEAM_ID>` · Team name: `<TEAM_NAME>` · Batch: `<BATCH>` · Faculty:
 
 ## 11. Acknowledgement and licence
 
-Smriti was designed and built by **Team Design Divas** (Gopal Raj Lohiya, Aditya Rai Chauhan, Mahir Kumar, Hitarth Garg, Mehak, Diya Gautam) for Smart India Hackathon 2026, problem statement SIH26003, at https://github.com/gopalrajlohiya11-ui/Smriti. This repository keeps that project's full commit history and authorship. The work added for Milestone 2 (bug fixes, tests, prompt documentation, deployment changes, documents) is listed in [`CHANGELOG.md`](CHANGELOG.md) and appears as separate commits. The ML engine is a separate project: https://github.com/adityaraichauhan/Dementia-AI-engine.
+Smriti was designed and built by **Team Design Divas** (Gopal Raj Lohiya, Aditya Rai Chauhan, Mahir Kumar, Hitarth Garg, Mehak, Diya Gautam) for Smart India Hackathon 2026, problem statement SIH26003, at https://github.com/gopalrajlohiya11-ui/Smriti. Its full commit history and authorship remain in that original repository. The work added for Milestone 2 (bug fixes, tests, prompt documentation, deployment changes, documents) is listed in [`CHANGELOG.md`](CHANGELOG.md). The ML engine is a separate project: https://github.com/adityaraichauhan/Dementia-AI-engine.
 
 The original README declared an MIT licence but had no licence file; [`LICENSE`](LICENSE) adds the MIT text with the original authors as copyright holders.

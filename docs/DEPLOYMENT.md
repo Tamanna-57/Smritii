@@ -36,7 +36,7 @@ To create the service again from scratch: *New → Blueprint* on this repository
 Already deployed: project `smriti-mini-project` → https://smriti-mini-project.vercel.app (also https://smriti-tamanna.vercel.app). `VITE_API_URL` is set and Vercel Authentication protects preview deployments only, so the production URL is public. To set it up again from scratch:
 
 
-1. https://vercel.com/new → import `Tamanna-57/smriti`.
+1. https://vercel.com/new → import `Tamanna-57/Smritii`.
 2. Leave **Root Directory** as the repository root: the root `vercel.json` runs
    `cd frontend && npm install && npm run build` and serves `frontend/dist` with SPA rewrites.
 3. **Environment Variables** → `VITE_API_URL` = `https://smriti-api-9lj6.onrender.com/api`

@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Version | v2 |
-| Source | `backend/services/patientChatService.js`, commit `96f8acd` (2 Sep 2026, Gopal Raj Lohiya): "Add Gemini-powered AI Chatbot with voice input/output & real MongoDB grounding" |
+| Source | `backend/services/patientChatService.js`, commit `96f8acd` of github.com/gopalrajlohiya11-ui/Smriti (2 Sep 2026, Gopal Raj Lohiya): "Add Gemini-powered AI Chatbot with voice input/output & real MongoDB grounding" |
 | What changed from v1 | The prompt is rebuilt on every request from the patient's MongoDB records (profile, today's reminders, family photos) and has 6 numbered rules, including "never make up medications" and "ask the doctor before changing a dose". |
 | Why | v1 knew nothing about the patient, so it could not answer "Who is my doctor?" or "Which medicine now?" |
 | Tool and model | Google Gemini API through `@google/genai`; cascade `gemini-3.6-flash → gemini-3.5-flash → gemini-2.5-flash → gemini-flash-latest → gemini-3.1-flash-lite` in the original code |

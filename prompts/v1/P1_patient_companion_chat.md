@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Version | v1 (first prompt in the project) |
-| Source | `backend/services/aiService.js`, initial commit `0bd13bf` (1 Sep 2026, Gopal Raj Lohiya). The same text is still used by the WhatsApp companion, see `prompts/final/P3_whatsapp_companion.md`. |
+| Source | `backend/services/aiService.js`, initial commit `0bd13bf` of github.com/gopalrajlohiya11-ui/Smriti (1 Sep 2026, Gopal Raj Lohiya). The same text is still used by the WhatsApp companion, see `prompts/final/P3_whatsapp_companion.md`. |
 | Tool and model | Google Gemini API through `@google/genai`; `gemini-3.6-flash` in the original code. The Milestone 2 experiment runs every version on the same model, see `test-data/outputs/prompt_experiments.md`. |
 | Settings | default (no temperature or token limit set) |
 | Examples included | 0 |
