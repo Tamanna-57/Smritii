@@ -81,8 +81,11 @@ const css = `
   @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
   body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 9.6pt; color: #1c1917; line-height: 1.38; }
   h1 { font-size: 17pt; margin: 0 0 4px; color: #7c2d12; }
-  h2 { font-size: 13pt; margin: 14px 0 6px; color: #7c2d12; border-bottom: 1.5px solid #fed7aa; padding-bottom: 2px; }
-  h3 { font-size: 10.5pt; margin: 10px 0 4px; }
+  h2 { font-size: 13pt; margin: 16px 0 6px; break-after: avoid; color: #7c2d12; border-bottom: 1.5px solid #fed7aa; padding-bottom: 2px; }
+  h3 { font-size: 10.5pt; margin: 9px 0 4px; break-after: avoid; }
+  tr, figure, pre { break-inside: avoid; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+  .grid2 figure { margin: 0 0 8px; }
   p { margin: 4px 0; }
   table { border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 8.4pt; }
   th, td { border: 1px solid #d6d3d1; padding: 3px 5px; vertical-align: top; text-align: left; }
@@ -95,7 +98,7 @@ const css = `
   figure { margin: 6px 0; text-align: center; } figure img { max-width: 100%; border: 1px solid #e7e5e4; }
   figcaption { font-size: 8pt; color: #57534e; }
   .shots { display: flex; gap: 8px; } .shots figure { flex: 1; } .shots img { max-height: 330px; }
-  .cover { text-align: center; padding-top: 50px; } .cover table { width: 80%; margin: 18px auto; font-size: 10pt; }
+  .cover { text-align: center; padding-top: 120px; page-break-after: always; } .cover table { width: 80%; margin: 18px auto; font-size: 10pt; }
 `;
 
 // ── Technical report (supporting document) ──────────────────────────────────
@@ -181,17 +184,17 @@ const p1sample = (() => {
 const p1vars = `{patient_name}, {first_name}, {honorific} (Dada/Uncle or Baideo/Aunty), {age}, {location}, {preferred_language}, {cognitive_stage}, {doctor}, {emergency_contact}, {medical_notes}, {care_notes}: from the patient record. {reminders_summary}: one line per reminder today (type, title, time, detail, status). {family_summary}: one line per Memory Bank photo. {games_summary}: last 5 game sessions. {user_message}: what the patient typed.`;
 
 const iterRows = [
-  ['v1', 'First prompt (1 Sep 2026, <code>0bd13bf</code>): persona only, "short (1-2 sentences), simple, reassuring". No patient data.', 'Starting point.'],
-  ['v2', '2 Sep (<code>96f8acd</code>): prompt rebuilt from MongoDB each request (profile, today\'s reminders, family); 6 rules incl. "never make up medications/dosages" and "ask the doctor before changing a dose"; temperature 0.7, 350 tokens.', 'v1 could not answer patient-specific questions (doctor, medicine, schedule).'],
-  ['v3 (final)', '4 Sep (<code>d44bf41</code>): strict language rule; last 5 game scores; per-question answer patterns; distress rule scoped narrowly; "no rubric labels"; faster model cascade. v2\'s dose-safety rules removed.', 'Replies in English for Assamese/Hindi patients; reassurance fired on factual questions; labels printed (from commit and code comments).'],
+  ['v1', 'The first prompt (1 Sep). It only told the model to be Smriti: warm, simple and brief, one or two sentences. It said nothing about the patient.', 'Our starting point.'],
+  ['v2', 'Second version (2 Sep). The prompt is rebuilt from the database for every message, with the patient\'s profile, today\'s reminders and family. Six rules were added, including "never make up medicines or doses" and "ask the doctor before changing a dose".', 'v1 could not answer simple personal questions like "Who is my doctor?" or "Which tablet now?".'],
+  ['v3 (final)', 'Third version (4 Sep). Added a strict rule to always reply in the patient\'s language, the last five game scores, a clear way to answer each kind of question, and comfort only when the patient is actually upset. The two dose-safety rules from v2 were dropped.', 'Replies were coming back in English for Assamese and Hindi speakers, and comforting lines appeared even for plain factual questions.'],
 ];
 const STATIC_RESULT = {
-  v1: 'Prompt text holds 0 patient facts (no doctor, medicines, schedule or language), so it cannot answer "Who is my doctor?" from records.',
-  v2: 'Prompt now carries the profile, all 10 of today\'s reminders with status and the family list, plus the dose-safety rule.',
-  v3: 'Adds the language rule and last 5 game scores; v2\'s dose-safety rule is gone. In our test run T11 (dose question, offline-fallback mode) failed: the reply was not referred to the doctor.',
+  v1: 'The prompt holds no facts about the patient at all, so it has no way to name the doctor, the medicines or the language.',
+  v2: 'The prompt now includes the profile, all ten of today\'s reminders with their status, and the family list, along with the dose-safety rule.',
+  v3: 'Adds the language rule and recent game scores, but the dose-safety rule is gone. Test T11 (a double-dose question, run in offline mode) failed: the reply did not send the patient to the doctor.',
 };
 const iterResult = (v) => {
-  if (!exp) return `${STATIC_RESULT[v] || ''} <i>Live Gemini comparison (code/prompt_experiments.js, 5 runs × 5 questions) pending an API key.</i>`;
+  if (!exp) return `${STATIC_RESULT[v] || ''} <i>Live Gemini numbers to follow.</i>`;
   return metrics.map((m) => `${metricLabel[m]}: ${rateTxt(v, m)}`).join('; ');
 };
 
@@ -217,7 +220,7 @@ const membersRows = team.members.map((m) => `<tr><td>${ph(m.name)}</td><td>${ph(
 const m2 = `
 <div class="cover">
   <h1 style="font-size:24pt">${esc(team.projectTitle)}</h1>
-  <p style="font-size:12pt">SCSE4041 Mini Project · Milestone 2</p>
+  <p style="font-size:12pt">SCSE4041 Prompt Engineering Mini Project, Milestone 2</p>
   <table>
     <tr><th>Team ID</th><td>${ph(team.teamId)}</td></tr>
     <tr><th>Team name</th><td>${ph(team.teamName)}</td></tr>
@@ -229,27 +232,31 @@ const m2 = `
     <tr><th>Repository</th><td>${esc(team.repoUrl)}</td></tr>
     <tr><th>Reel</th><td>${ph(team.reelUrl)} (${ph(team.reelSeconds)} s)</td></tr>
   </table>
-  <p class="small">Built on the open Smriti project by Team Design Divas (SIH 2026), github.com/gopalrajlohiya11-ui/Smriti</p>
+  <p class="small">Built on Smriti, an open Smart India Hackathon 2026 project by Team Design Divas (github.com/gopalrajlohiya11-ui/Smriti)</p>
 </div>
 
-<h2 class="break">2. Prompt and solution design</h2>
-<p><b>Problem and users.</b> Elderly people with early dementia forget medicines, meals and family members; many speak Assamese or Hindi and have weak internet. Their family caregivers and doctors cannot see whether the routine is followed. Smriti serves the patient (primary user) and the caregiver (secondary user).</p>
-<p><b>Input and output.</b> Input: a patient's question typed or spoken in any language, plus their records in MongoDB (profile, today's reminders, family photos, recent game scores). Output: a 2–4 sentence warm reply in the patient's preferred language, shown and read aloud; for voice, also the transcription.</p>
-<p><b>Prompts and steps.</b> Three prompts (one LLM call each): P1 for typed chat, P2 for voice (same system prompt, audio plus a format instruction so one call does transcription and reply), P3 for WhatsApp. One call per question keeps latency low for read-aloud; grounding comes from inserting the records into the system prompt rather than a separate retrieval step, because each patient's data is small (≈ 25 lines). Workflow: validate input → load records → fill prompt → Gemini cascade → parse → fallback → show and speak.</p>
-<p><b>Tool and model.</b> Google Gemini through the <code>@google/genai</code> SDK: flash-class models (<code>gemini-3.5-flash-lite</code> first, then <code>gemini-3.5-flash</code>, <code>gemini-flash-latest</code>) for speed, native audio input and Indian-language output; a 3-model cascade and a keyword fallback keep the chat answering when a model is unavailable.</p>
-<p><b>Changes since Milestone 1.</b> ${/^</.test(team.milestone1Summary) ? 'Milestone 1 covered problem identification, the use case and the initial prompt proposal.' : esc(team.milestone1Summary)} In Milestone 2: the prototype was run end to end, six defects were fixed, the chat API reports which path answered, three prompt versions were documented from the history and compared on fixed inputs, ${tests.length} tests were run and saved, and the backend was deployed on Render.</p>
+<h2>2. Prompt and solution design</h2>
+<p><b>Problem and users.</b> Older people in the early stages of dementia often forget a tablet, a meal or a familiar face. Many of them in the North-East are more at ease in Assamese or Hindi than in English, and mobile data can be patchy. Their families and doctors usually have no simple way to know how the day actually went. Smriti is built for two people: the patient, who uses the phone app every day, and the caregiver, who keeps an eye on things from a dashboard.</p>
+<p><b>Input and output.</b> The patient types or speaks a question in any language. Along with it, the app pulls that patient's own records from the database: their profile, today's reminders, family photos and recent game scores. What comes back is a short, warm reply of two to four sentences in the patient's own language, shown on screen and read aloud. For a voice question we also return what the model heard.</p>
+<p><b>Prompts and steps.</b> We use three prompts, each a single model call. P1 handles typed chat. P2 handles voice: it reuses P1's system prompt and adds one instruction so that a single call both transcribes and answers. P3 answers free-text WhatsApp messages. We kept it to one call per question because the reply is read aloud and a second call would make the patient wait. Instead of a separate retrieval step, we place the patient's records straight into the system prompt, since one patient's data is only about 25 lines. The steps are: check the input, load the records, fill in the prompt, call Gemini, tidy up the reply (or fall back), then show and speak it.</p>
+<p><b>Tool and model.</b> We call Google Gemini from our Node.js server using Google's official SDK. The first choice is Gemini 3.5 Flash-Lite, with Gemini 3.5 Flash and Gemini Flash (latest) as backups. We picked the Flash models because they answer quickly, accept audio directly and write well in Hindi and Assamese. If all three are unavailable, a simple keyword-based reply in the patient's language takes over, so the chat never goes silent.</p>
+<p><b>Changes since Milestone 1.</b> ${/^</.test(team.milestone1Summary) ? 'Milestone 1 covered problem identification, the use case and the initial prompt proposal.' : esc(team.milestone1Summary)} In Milestone 2 we ran the whole system end to end, found and fixed six bugs, made the chat report whether Gemini or the fallback answered, wrote up three versions of the main prompt, ran and saved ${tests.length} tests, and put the app online.</p>
 
-<p><b>Responsible AI by design.</b> Smriti gives memory support and reminders, never a diagnosis or a change of prescription; the prompt answers only from the patient's own records and asks the caregiver/doctor for anything else. All data in the prototype is made-up demo data (no real patients). The model never receives passwords or PINs; replies are short and read aloud for elderly users, and an offline keyword fallback keeps the app safe when the model is unavailable. Known gap: the final prompt (v3) dropped v2's rule "ask the doctor before changing a dose"; test T11 shows the effect, and restoring it is the first Milestone 3 fix.</p>
+<p><b>Responsible use.</b> Smriti offers memory support and reminders. It never diagnoses anything and must never change a prescription. The prompt tells the model to answer only from the patient's own records and to point the patient to their doctor or caregiver for anything else. Every person in the prototype is made up; no real patient data is used. PINs and passwords never reach the model. We also found a gap: our final prompt (v3) lost an earlier rule telling the model to send dose questions to the doctor. Test T11 shows what that leads to, and putting the rule back is the first job for Milestone 3.</p>
 
 <h3>Diagrams</h3>
-<figure><img src="${img('docs/diagrams/02_prompt_workflow.png')}" style="max-height:620px"><figcaption>Figure 1. Prompt workflow (P1/P2)</figcaption></figure>
-<figure class="break"><img src="${img('docs/diagrams/03_task_decomposition.png')}" style="max-height:640px"><figcaption>Figure 2. Task decomposition</figcaption></figure>
-<figure class="break"><img src="${img('docs/diagrams/04_input_output_flow.png')}" style="max-height:400px"><figcaption>Figure 3. Input–output flow</figcaption></figure>
-<figure><img src="${img('docs/diagrams/01_system_architecture.png')}"><figcaption>Figure 4. System architecture</figcaption></figure>
+<div class="grid2">
+  <figure><img src="${img('docs/diagrams/02_prompt_workflow.png')}" style="max-height:640px"><figcaption>Figure 1. Prompt workflow for P1 and P2</figcaption></figure>
+  <div>
+    <figure><img src="${img('docs/diagrams/04_input_output_flow.png')}"><figcaption>Figure 2. Input and output flow</figcaption></figure>
+    <figure><img src="${img('docs/diagrams/01_system_architecture.png')}"><figcaption>Figure 3. System architecture</figcaption></figure>
+  </div>
+</div>
+<figure><img src="${img('docs/diagrams/03_task_decomposition.png')}" style="max-height:520px"><figcaption>Figure 4. Task decomposition</figcaption></figure>
 
-<h3 class="break">Prompt sheets</h3>
+<h3>Prompt sheets</h3>
 ${promptSheet('P1', 'Patient Companion Chat', [
-  ['Step in workflow', 'Step 4: after the patient\'s records are loaded (Figure 1)'],
+  ['Step in workflow', 'After the patient\'s records are loaded (Figure 1)'],
   ['Purpose', 'Answer the patient warmly and briefly, in their language, from their real records'],
   ['Tool and model', 'Google Gemini API; cascade gemini-3.5-flash-lite → gemini-3.5-flash → gemini-flash-latest'],
   ['Settings', 'temperature 0.7, maxOutputTokens 350, last 6 turns as history'],
@@ -276,21 +283,22 @@ ${promptSheet('P3', 'WhatsApp Companion Reply', [
   ['Output format', 'Plain text, 1–2 sentences'],
 ], P3sys, '{chat_history}\n{whatsapp_message}', '<p>Not run with Gemini: replies cannot be delivered without a Meta WhatsApp token. The non-LLM "Done" path was tested (W1, W2).</p>')}
 
-<h2 class="break">3. Implementation</h2>
-<p><b>What is built.</b> A React 19 PWA with patient and caregiver portals, an Express 5 API with MongoDB, Gemini chat (P1, P2), a WhatsApp webhook (P3), five cognitive games with adaptive difficulty, offline caching and three UI languages. Live deployment: web app on Vercel (${esc(team.prototypeUrl)}) and API on Render (https://smriti-api-9lj6.onrender.com), database MongoDB Atlas. Milestone 2 work: six defect fixes (seed crash on Linux, wrong-PIN login, Routine Sequencer with no cards, WhatsApp phone matching, Hindi titles, rate limiter behind a proxy), opt-in demo seeding and time zone for hosting, a <code>replySource</code> field, test runners, prompt documentation and the Render deployment.</p>
+<h2>3. Implementation</h2>
+<p><b>What is built.</b> Smriti is a web app that installs on a phone like a normal app. Patients get a PIN login, today's schedule, five memory games, family photos and the AI chat; caregivers get a dashboard. Behind it are a Node.js server, a MongoDB database, Gemini for the chat, and a WhatsApp link for reminders. The app works in English, Hindi and Assamese and keeps working without internet. It is live: the website on Vercel (${esc(team.prototypeUrl)}) and the server on Render.</p>
+<p>In this milestone we ran every screen ourselves and fixed what broke. A wrong PIN still let you in. One game dealt no cards. Hindi mode showed the same title on every reminder. WhatsApp replies were not matched to the right patient. The demo data could not be loaded on Linux. And the login limit would have locked out every visitor at once on the live server. We also added automatic demo data for the hosted version and wrote the test scripts.</p>
 <table><tr><th>Module</th><th>What it does</th><th>Status</th><th>Notes</th></tr>
 ${moduleRows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</table>
 
 <h3>Prompt iteration log (P1 Patient Companion Chat)</h3>
-<p class="small">Versions are the ones in the project's git history. "Result" is measured by code/prompt_experiments.js: same patient, same 5 questions, ${exp ? `${exp.meta.runsPerQuestion} runs each, ${esc(exp.meta.model)}, temperature 0.7` : 'Gemini run pending'}.</p>
+<p class="small">These are the three versions saved in the project's history. ${exp ? `Results come from code/prompt_experiments.js: the same patient and the same five questions, ${exp.meta.runsPerQuestion} runs each, on ${esc(exp.meta.model)}.` : 'We could not run them live on Gemini yet because we had no working API key, so the results describe what each version can and cannot do, plus what our tests showed.'}</p>
 <table><tr><th>Version</th><th style="width:36%">What changed</th><th style="width:22%">Why it was changed</th><th>Result after the change</th></tr>
 ${iterRows.map(([v, w, y]) => `<tr><td>${v}</td><td>${w}</td><td>${y}</td><td>${iterResult(v.split(' ')[0])}</td></tr>`).join('')}</table>
 <h3>Full text: v1</h3><pre>${esc(P1v1)}</pre>
 <h3>Full text: v2</h3><pre>${esc(P1v2)}</pre>
 <h3>Full text: v3 (final)</h3><pre>${esc(P1v3)}</pre>
 
-<h2 class="break">4. Demonstration and testing</h2>
-<p>${tests.length} test inputs: ${tests.length - nEdge - nInvalid} normal, ${nEdge} edge, ${nInvalid} invalid. <b>${nPass} passed, ${tests.length - nPass} failed.</b> Run on ${esc(api.meta.ranAt.slice(0, 10))} against the app on a seeded MongoDB 7. ${geminiRun ? '' : 'Chat tests T07–T11 ran without a Gemini key, so the replies come from the offline fallback ([fallback] in the output).'} Raw outputs: test-data/outputs/.</p>
+<h2>4. Demonstration and testing</h2>
+<p>We tested ${tests.length} inputs: ${tests.length - nEdge - nInvalid} normal, ${nEdge} edge cases and ${nInvalid} invalid ones. <b>${nPass} passed and ${tests.length - nPass} failed</b>, and we have kept the failures in rather than hide them. The tests ran on ${esc(api.meta.ranAt.slice(0, 10))} against the real app with demo data loaded. ${geminiRun ? '' : 'We had no Gemini key at the time, so the chat tests (T07 to T11) were answered by the offline fallback, marked [fallback] below.'} Every input and full response is saved in test-data/outputs.</p>
 ${testTable}
 <div class="shots">
   <figure><img src="${img('docs/screenshots/milestone2/UI1_wrong_pin_rejected.png')}"><figcaption>UI1: wrong PIN rejected</figcaption></figure>
@@ -299,22 +307,24 @@ ${testTable}
 </div>
 <h3>Known limitations and next steps</h3>
 <table><tr><th>Limitation</th><th>What we will try next</th></tr>
-<tr><td>P1 v3 lost v2's dose-safety rule; the double-dose question is not referred to the doctor (T11).</td><td>P1 v4 = v3 + "never advise on doses; ask {doctor}"; re-run the experiment and T11.</td></tr>
-<tr><td>Voice (P2) and WhatsApp sending untested (no microphone, no Meta token).</td><td>Recorded Assamese/Hindi test clips through the API; a WhatsApp Business test number.</td></tr>
-<tr><td>Anonymous writes accepted: game sessions (T19), reminder updates, /api/test routes.</td><td>Require a patient or caregiver token on every write route.</td></tr>
-<tr><td>Login name is case-sensitive (T03); external ML engine unreachable, so difficulty is rule-based.</td><td>Case-insensitive name match with PIN check; host the ML engine with the backend.</td></tr></table>
+<tr><td>The final prompt lost the rule that sends dose questions to the doctor, so a double-dose question gets no such advice (T11).</td><td>Write v4: v3 plus "never advise on doses, ask the doctor", then run the prompt comparison and T11 again.</td></tr>
+<tr><td>Voice questions and WhatsApp sending are not tested yet: our test browser has no microphone and we have no WhatsApp Business number.</td><td>Record short Assamese and Hindi voice clips to test with, and set up a WhatsApp test number.</td></tr>
+<tr><td>Some parts of the server accept changes without a login, for example saving a game score (T19).</td><td>Require a patient or caregiver login for every change.</td></tr>
+<tr><td>Typing the name in lower case blocks login (T03), and the external ML service was unreachable, so game difficulty uses simple rules.</td><td>Make the name check case-insensitive, and host the ML service next to our server.</td></tr></table>
 
-<h2 class="break">5. Repository</h2>
+<h2>5. Repository</h2>
 ${exists('docs/screenshots/milestone2/repository.png') ? `<figure><img src="${img('docs/screenshots/milestone2/repository.png')}" style="max-height:470px"><figcaption>${esc(team.repoUrl)}</figcaption></figure>` : '<p class="ph">Repository screenshot pending.</p>'}
-<p>Repository: ${esc(team.repoUrl)} (public). It contains the full Smriti code (frontend/, backend/) with the Milestone 2 work by Tamanna Arora: six bug fixes, deployment changes, test runners (code/), saved test inputs and outputs (test-data/), prompt versions v1–v3 and final sheets P1–P3 (prompts/), diagrams, screenshots and these PDFs (docs/). CHANGELOG.md lists every dated change; the original team's history is at github.com/gopalrajlohiya11-ui/Smriti.</p>
+<p>Our repository is public at ${esc(team.repoUrl)}. It holds the full app code (frontend and backend) and everything from this milestone: the six bug fixes, the deployment set-up, our test scripts with every saved input and output, the three prompt versions and the final prompt sheets, the diagrams, screenshots and these PDFs. Since Milestone 1 we fixed six bugs, added tests and prompt documentation, and put the app online; CHANGELOG.md lists each change with its date. Smriti started as an open Smart India Hackathon 2026 project by Team Design Divas, whose full history remains at github.com/gopalrajlohiya11-ui/Smriti.</p>
 
-<h2 class="break">6. Supporting document</h2>
-<p class="small">Document type: ${supportingIsSynopsis ? 'Synopsis' : 'Technical report'} (the same PDF is uploaded separately).</p>
+<h2>6. Supporting document</h2>
+<p class="small">${supportingIsSynopsis ? 'Synopsis' : 'Technical report'}: the same document is uploaded separately with the form.</p>
 ${supportingHtml}
 
-<h2 class="break">7. Team contribution</h2>
+<div style="break-inside: avoid;">
+<h2>7. Team contribution</h2>
 <table><tr><th>Member name</th><th>Enrollment no.</th><th>Role</th><th style="width:34%">Tasks done in Milestone 2</th><th>Evidence</th><th>Contribution (%)</th></tr>${membersRows}</table>
-<p class="small">All members must agree to this table before submission. Percentages must add up to 100.</p>
+${team.members.every((m) => /^\d+(\.\d+)?$/.test(String(m.percent))) ? `<p class="small">All ${team.members.length} of us have agreed to this table; the shares add up to ${team.members.reduce((a, m) => a + Number(m.percent), 0)}%.</p>` : '<p class="small ph">Contribution percentages to be filled in and agreed by all members (they must add up to 100).</p>'}
+</div>
 `;
 
 (async () => {
