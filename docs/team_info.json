@@ -1,10 +1,10 @@
 {
   "_note": "Fill in every <...> value, then run: node code/build_pdfs.js. Percentages must add up to 100. supportingDocument: 'synopsis' or 'technical_report' (goes in Section 6 and is the separate upload).",
-  "teamId": "<TEAM_ID>",
-  "teamName": "<TEAM_NAME>",
+  "teamId": "PE-B81-27",
+  "teamName": "Team Powerpuff Boys",
   "projectTitle": "Smriti: AI Memory Companion for Elderly Dementia Patients",
-  "batch": "<BATCH>",
-  "faculty": "<FACULTY_NAME>",
+  "batch": "85",
+  "faculty": "Indrajeet Gupta",
   "prototypeUrl": "https://smriti-mini-project.vercel.app",
   "repoUrl": "https://github.com/Tamanna-57/Smritii",
   "reelUrl": "<REEL_URL>",
@@ -13,16 +13,32 @@
   "milestone1Summary": "<What was submitted in Milestone 1 (idea, prompts, scope) — needed for 'what changed since Milestone 1'>",
   "members": [
     {
+      "name": "Nishtha Jain",
+      "enrollment": "S24CSEU2245",
+      "role": "<ROLE>",
+      "tasks": "<SPECIFIC TASKS>",
+      "evidence": "<FILE / COMMIT / PROMPT ID>",
+      "percent": "<%>"
+    },
+    {
+      "name": "Aman Swamy",
+      "enrollment": "S24CSEU2269",
+      "role": "<ROLE>",
+      "tasks": "<SPECIFIC TASKS>",
+      "evidence": "<FILE / COMMIT / PROMPT ID>",
+      "percent": "<%>"
+    },
+    {
       "name": "Tamanna Arora",
-      "enrollment": "<ENROLLMENT_NO>",
+      "enrollment": "S24CSEU0588",
       "role": "<ROLE>",
       "tasks": "Ran and audited the prototype; found and fixed 6 bugs (seed crash, wrong-PIN login, Routine Sequencer, WhatsApp phone match, Hindi titles, rate limit); wrote API/UI/WhatsApp tests and the prompt experiment; documented prompts v1–v3 and P1–P3; set up repository and Render deployment",
       "evidence": "Repository github.com/Tamanna-57/Smritii; CHANGELOG.md; code/run_api_tests.js; prompts/final/",
       "percent": "<%>"
     },
     {
-      "name": "<MEMBER_NAME>",
-      "enrollment": "<ENROLLMENT_NO>",
+      "name": "Shourya Grover",
+      "enrollment": "S24CSEU2080",
       "role": "<ROLE>",
       "tasks": "<SPECIFIC TASKS>",
       "evidence": "<FILE / COMMIT / PROMPT ID>",
