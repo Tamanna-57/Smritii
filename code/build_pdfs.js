@@ -185,8 +185,13 @@ const iterRows = [
   ['v2', '2 Sep (<code>96f8acd</code>): prompt rebuilt from MongoDB each request (profile, today\'s reminders, family); 6 rules incl. "never make up medications/dosages" and "ask the doctor before changing a dose"; temperature 0.7, 350 tokens.', 'v1 could not answer patient-specific questions (doctor, medicine, schedule).'],
   ['v3 (final)', '4 Sep (<code>d44bf41</code>): strict language rule; last 5 game scores; per-question answer patterns; distress rule scoped narrowly; "no rubric labels"; faster model cascade. v2\'s dose-safety rules removed.', 'Replies in English for Assamese/Hindi patients; reassurance fired on factual questions; labels printed (from commit and code comments).'],
 ];
+const STATIC_RESULT = {
+  v1: 'Prompt text holds 0 patient facts (no doctor, medicines, schedule or language), so it cannot answer "Who is my doctor?" from records.',
+  v2: 'Prompt now carries the profile, all 10 of today\'s reminders with status and the family list, plus the dose-safety rule.',
+  v3: 'Adds the language rule and last 5 game scores; v2\'s dose-safety rule is gone. In our test run T11 (dose question, offline-fallback mode) failed: the reply was not referred to the doctor.',
+};
 const iterResult = (v) => {
-  if (!exp) return '<span class="ph">Pending Gemini run (code/prompt_experiments.js)</span>';
+  if (!exp) return `${STATIC_RESULT[v] || ''} <i>Live Gemini comparison (code/prompt_experiments.js, 5 runs × 5 questions) pending an API key.</i>`;
   return metrics.map((m) => `${metricLabel[m]}: ${rateTxt(v, m)}`).join('; ');
 };
 
@@ -232,7 +237,9 @@ const m2 = `
 <p><b>Input and output.</b> Input: a patient's question typed or spoken in any language, plus their records in MongoDB (profile, today's reminders, family photos, recent game scores). Output: a 2–4 sentence warm reply in the patient's preferred language, shown and read aloud; for voice, also the transcription.</p>
 <p><b>Prompts and steps.</b> Three prompts (one LLM call each): P1 for typed chat, P2 for voice (same system prompt, audio plus a format instruction so one call does transcription and reply), P3 for WhatsApp. One call per question keeps latency low for read-aloud; grounding comes from inserting the records into the system prompt rather than a separate retrieval step, because each patient's data is small (≈ 25 lines). Workflow: validate input → load records → fill prompt → Gemini cascade → parse → fallback → show and speak.</p>
 <p><b>Tool and model.</b> Google Gemini through the <code>@google/genai</code> SDK: flash-class models (<code>gemini-3.5-flash-lite</code> first, then <code>gemini-3.5-flash</code>, <code>gemini-flash-latest</code>) for speed, native audio input and Indian-language output; a 3-model cascade and a keyword fallback keep the chat answering when a model is unavailable.</p>
-<p><b>Changes since Milestone 1.</b> ${ph(team.milestone1Summary)} In Milestone 2: the prototype was run end to end, six defects were fixed, the chat API reports which path answered, three prompt versions were documented from the history and compared on fixed inputs, ${tests.length} tests were run and saved, and the backend was deployed on Render.</p>
+<p><b>Changes since Milestone 1.</b> ${/^</.test(team.milestone1Summary) ? 'Milestone 1 covered problem identification, the use case and the initial prompt proposal.' : esc(team.milestone1Summary)} In Milestone 2: the prototype was run end to end, six defects were fixed, the chat API reports which path answered, three prompt versions were documented from the history and compared on fixed inputs, ${tests.length} tests were run and saved, and the backend was deployed on Render.</p>
+
+<p><b>Responsible AI by design.</b> Smriti gives memory support and reminders, never a diagnosis or a change of prescription; the prompt answers only from the patient's own records and asks the caregiver/doctor for anything else. All data in the prototype is made-up demo data (no real patients). The model never receives passwords or PINs; replies are short and read aloud for elderly users, and an offline keyword fallback keeps the app safe when the model is unavailable. Known gap: the final prompt (v3) dropped v2's rule "ask the doctor before changing a dose"; test T11 shows the effect, and restoring it is the first Milestone 3 fix.</p>
 
 <h3>Diagrams</h3>
 <figure><img src="${img('docs/diagrams/02_prompt_workflow.png')}" style="max-height:620px"><figcaption>Figure 1. Prompt workflow (P1/P2)</figcaption></figure>
@@ -270,7 +277,7 @@ ${promptSheet('P3', 'WhatsApp Companion Reply', [
 ], P3sys, '{chat_history}\n{whatsapp_message}', '<p>Not run with Gemini: replies cannot be delivered without a Meta WhatsApp token. The non-LLM "Done" path was tested (W1, W2).</p>')}
 
 <h2 class="break">3. Implementation</h2>
-<p><b>What is built.</b> A React 19 PWA with patient and caregiver portals, an Express 5 API with MongoDB, Gemini chat (P1, P2), a WhatsApp webhook (P3), five cognitive games with adaptive difficulty, offline caching and three UI languages. Milestone 2 work: six defect fixes (seed crash on Linux, wrong-PIN login, Routine Sequencer with no cards, WhatsApp phone matching, Hindi titles, rate limiter behind a proxy), opt-in demo seeding and time zone for hosting, a <code>replySource</code> field, test runners, prompt documentation and the Render deployment.</p>
+<p><b>What is built.</b> A React 19 PWA with patient and caregiver portals, an Express 5 API with MongoDB, Gemini chat (P1, P2), a WhatsApp webhook (P3), five cognitive games with adaptive difficulty, offline caching and three UI languages. Live deployment: web app on Vercel (${esc(team.prototypeUrl)}) and API on Render (https://smriti-api-9lj6.onrender.com), database MongoDB Atlas. Milestone 2 work: six defect fixes (seed crash on Linux, wrong-PIN login, Routine Sequencer with no cards, WhatsApp phone matching, Hindi titles, rate limiter behind a proxy), opt-in demo seeding and time zone for hosting, a <code>replySource</code> field, test runners, prompt documentation and the Render deployment.</p>
 <table><tr><th>Module</th><th>What it does</th><th>Status</th><th>Notes</th></tr>
 ${moduleRows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</table>
 
